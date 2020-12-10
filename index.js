@@ -57,7 +57,7 @@ const args = require('minimist')(process.argv.slice(2), {
 })()
 
 function printHelp() {
-	console.log('plex-audit usage:');
+	console.log('plex-file-audit usage:');
 	console.log('');
 	console.log('-h, --help                  print this help');
 	console.log('-d, --dir                   set path to directory')
