@@ -39,7 +39,7 @@ const args = require('minimist')(process.argv.slice(2), {
 				if (extensions.includes(newDirName.split('.').slice(-1)[0])) {
 					newDirName = newDirName.split('.');
 					newDirName.pop();
-					newDirName = newDirName.join('');
+					newDirName = newDirName.join('.');
 				}
 				if (!fs.existsSync(path.join(args.dir, newDirName))) {
 					args.verbose && console.log(`Creating directory for "${file}"...`);
