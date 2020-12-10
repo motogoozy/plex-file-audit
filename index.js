@@ -14,8 +14,15 @@ const args = require('minimist')(process.argv.slice(2), {
 });
 
 (async function main() {
-	if (args.help || process.argv.length <= 2 || !args.dir) {
+	if (args.help) {
 		printHelp();
+		process.exit();
+	}
+
+	if (process.argv.length <= 2 || !args.dir) {
+		printHelp();
+		console.log('Error: You must pass in a valid directory path');
+		process.exit(9);
 	}
 
 	try {
@@ -25,7 +32,7 @@ const args = require('minimist')(process.argv.slice(2), {
 			let filepath = path.join(args.dir, file);
 			let stat = await fs.promises.stat(filepath);
 			if (stat.isFile()) {
-				args.verbose && console.log(`File detected: ${file}`);
+				args.verbose && console.log(`File detected: "${file}"`);
 				let extensions = ['mp4', 'MP4', 'mkv', 'MKV'];
 				let newDirName = file;
 				if (extensions.includes(newDirName.split('.').slice(-1)[0])) {
@@ -34,13 +41,13 @@ const args = require('minimist')(process.argv.slice(2), {
 					newDirName = newDirName.join('');
 				}
 				if (!fs.existsSync(path.join(args.dir, newDirName))) {
-					args.verbose && console.log('Creating directory...');
+					args.verbose && console.log(`Creating directory for "${file}"...`);
 					fs.mkdirSync(path.join(args.dir, newDirName));
 				}
 				await fs.promises.rename(filepath, path.join(args.dir, newDirName, file));
-				args.verbose && console.log('Moved file into new directory');
+				args.verbose && console.log(`Moved "${file}" into new directory`);
 			} else {
-				// console.log(`${file} is a directory`);
+				args.verbose && console.log(`"${file}" is a directory... skipping`);
 			}
 		}
 		console.log('Finished!')
