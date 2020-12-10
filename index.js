@@ -28,7 +28,8 @@ const args = require('minimist')(process.argv.slice(2), {
 	try {
 		console.log('Scanning files...')
 		const files = await fs.promises.readdir(args.dir);
-		for (const file of files) {
+		const filteredFiles = files.filter(file => !file.startsWith('.')); //ignore hidden files
+		for (const file of filteredFiles) {
 			let filepath = path.join(args.dir, file);
 			let stat = await fs.promises.stat(filepath);
 			if (stat.isFile()) {
