@@ -33,7 +33,7 @@ const args = require('minimist')(process.argv.slice(2), {
 			let stat = await fs.promises.stat(filepath);
 			if (stat.isFile()) {
 				args.verbose && console.log(`File detected: "${file}"`);
-				let extensions = ['mp4', 'MP4', 'mkv', 'MKV'];
+				let extensions = ['mp4', 'MP4', 'mkv', 'MKV', 'avi', 'AVI'];
 				let newDirName = file;
 				if (extensions.includes(newDirName.split('.').slice(-1)[0])) {
 					newDirName = newDirName.split('.');
